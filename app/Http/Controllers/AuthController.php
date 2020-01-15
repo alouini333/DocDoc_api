@@ -26,7 +26,6 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        try {
             $request->validate([
               'name'     => 'required|string|unique:users',
               'email'    => 'required|email|unique:users',
@@ -36,13 +35,7 @@ class AuthController extends Controller
             $user = new User;
             $user->fill($filteredRequest);
             $user->save();
-            return response()->json([
-              'status' => 'success',
-              'message' => 'User registered with success'
-            ]);
-        } catch (\Exception $e) {
-            return \Utils::handleException($e);
-        }
+            return \Utils::returnSuccess('User registered with success');
     }
     /**
      * Get a JWT via given credentials.
@@ -79,7 +72,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return \Utils::returnSuccess('Successfully logged out');
     }
 
     /**
