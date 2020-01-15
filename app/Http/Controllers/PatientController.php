@@ -11,7 +11,7 @@ class PatientController extends Controller
     {
         try {
             $patients = Patient::get();
-            return \Utils::returnData($data);
+            return \Utils::returnData($patients);
         } catch (\Exception $e) {
             return \Utils::handleException($e);
         }
