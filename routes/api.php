@@ -21,3 +21,21 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 });
+Route::group([
+    'prefix' => 'patients'
+], function ($router) {
+    Route::get('/', 'PatientController@index');
+    Route::get('/{id}', 'PatientController@show');
+    Route::post('', 'PatientController@store');
+    Route::put('/{id}', 'PatientController@update');
+    Route::delete('/{id}', 'PatientController@delete');
+});
+Route::group([
+    'prefix' => 'appointments'
+], function ($router) {
+    Route::get('/', 'AppointmentController@index');
+    Route::get('/{id}', 'AppointmentController@show');
+    Route::post('', 'AppointmentController@store');
+    Route::put('/{id}', 'AppointmentController@update');
+    Route::delete('/{id}', 'AppointmentController@delete');
+});
