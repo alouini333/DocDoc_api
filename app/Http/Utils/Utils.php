@@ -44,7 +44,7 @@ class Utils
     {
         return response()->json([
           'status' => 'success',
-          'message'=> $data
+          'message'=> $message
         ]);
     }
 }
