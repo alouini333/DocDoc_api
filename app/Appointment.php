@@ -21,13 +21,6 @@ class Appointment extends Model
         return $this->belongsTo('App\Patient');
     }
 
-    // Returns if a specific time is between some Appointment
-    public function scopeBetweenDate($query, $time)
-    {
-        return $query->where('starts_on', '<=', $time)->where('ends_on', '>=', $time);
-    }
-
-
     public static function isFreeBetween($startsOn, $endsOn)
     {
         $startsOn = Carbon::parse($startsOn)->subMinute();
