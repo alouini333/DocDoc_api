@@ -63,6 +63,14 @@ class AppointmentController extends Controller
             }
             $appointment = new Appointment;
             $appointment->fill($request->only(['starts_on', 'notes', 'patient_id', 'ends_on']));
+            if ($request->has('starts_on')) {
+                if (!Appointment::isFreeBetween($request->starts_on, $request->ends_on)) {
+                    throw new DatesException;
+                } else {
+                    $appointment->starts_on = $request->starts_on;
+                    $appointment->ends_on = $request->ends_on;
+                }
+            }
             $appointment->save();
             return \Utils::returnSuccess('Appointment updated with success');
         } catch (\Exception $e) {
