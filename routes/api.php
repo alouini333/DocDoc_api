@@ -30,3 +30,12 @@ Route::group([
     Route::put('/{id}', 'PatientController@update');
     Route::delete('/{id}', 'PatientController@delete');
 });
+Route::group([
+    'prefix' => 'appointments'
+], function ($router) {
+    Route::get('/', 'AppointmentController@index');
+    Route::get('/{id}', 'AppointmentController@show');
+    Route::post('', 'AppointmentController@store');
+    Route::put('/{id}', 'AppointmentController@update');
+    Route::delete('/{id}', 'AppointmentController@delete');
+});
