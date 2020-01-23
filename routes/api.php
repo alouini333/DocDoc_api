@@ -1,4 +1,4 @@
-<?php
+$api<?php
 
 use Illuminate\Http\Request;
 
@@ -12,30 +12,28 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group([
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('register', 'AuthController@register');
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+Route::group(['prefix' => 'auth'], function ($api) {
+    $api->post('register', 'AuthController@register');
+    $api->post('login', 'AuthController@login');
 });
-Route::group([
-    'prefix' => 'patients'
-], function ($router) {
-    Route::get('/', 'PatientController@index');
-    Route::get('/{id}', 'PatientController@show');
-    Route::post('', 'PatientController@store');
-    Route::put('/{id}', 'PatientController@update');
-    Route::delete('/{id}', 'PatientController@delete');
-});
-Route::group([
-    'prefix' => 'appointments'
-], function ($router) {
-    Route::get('/', 'AppointmentController@index');
-    Route::get('/{id}', 'AppointmentController@show');
-    Route::post('', 'AppointmentController@store');
-    Route::put('/{id}', 'AppointmentController@update');
-    Route::delete('/{id}', 'AppointmentController@delete');
+Route::group(['middleware' => 'jwt.auth'], function ($api) {
+    $api->group(['prefix' => 'auth'], function ($api) {
+        $api->post('logout', 'AuthController@logout');
+        $api->post('refresh', 'AuthController@refresh');
+        $api->post('me', 'AuthController@me');
+    });
+    $api->group(['prefix' => 'patients'], function ($api) {
+        $api->get('/', 'PatientController@index');
+        $api->get('/{id}', 'PatientController@show');
+        $api->post('', 'PatientController@store');
+        $api->put('/{id}', 'PatientController@update');
+        $api->delete('/{id}', 'PatientController@delete');
+    });
+    $api->group(['prefix' => 'appointments'], function ($api) {
+        $api->get('/', 'AppointmentController@index');
+        $api->get('/{id}', 'AppointmentController@show');
+        $api->post('', 'AppointmentController@store');
+        $api->put('/{id}', 'AppointmentController@update');
+        $api->delete('/{id}', 'AppointmentController@delete');
+    });
 });
