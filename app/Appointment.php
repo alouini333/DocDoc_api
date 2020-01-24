@@ -21,11 +21,11 @@ class Appointment extends Model
         return $this->belongsTo('App\Patient');
     }
 
-    public static function isFreeBetween($startsOn, $endsOn)
+    public static function isFreeBetween($startsOn, $endsOn, $id = null)
     {
         $startsOn = Carbon::parse($startsOn)->subMinute();
         $endsOn = Carbon::parse($endsOn)->subMinute();
-        return Appointment::where(function (Builder $query) use ($startsOn, $endsOn) {
+        $appointments = Appointment::where(function (Builder $query) use ($startsOn, $endsOn) {
             $query->where('starts_on', '>', $startsOn)->where('ends_on', '<', $endsOn);
         })->orWhere(function (Builder $query) use ($startsOn, $endsOn) {
             $query->where('starts_on', '<=', $startsOn)->where('ends_on', '>=', $endsOn);
@@ -33,6 +33,7 @@ class Appointment extends Model
             $query->where('starts_on', '>', $startsOn)->where('starts_on', '<', $endsOn);
         })->orWhere(function (Builder $query) use ($startsOn, $endsOn) {
             $query->where('ends_on', '>', $startsOn)->where('ends_on', '<', $endsOn);
-        })->count() === 0;
+        })->get();
+        return $appointments->where('id', '!=', $id)->count() === 0;
     }
 }
