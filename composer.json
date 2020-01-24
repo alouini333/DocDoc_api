@@ -1,5 +1,5 @@
 {
-    "name": "DocDoc API",
+    "name": "laravel/laravel",
     "type": "project",
     "description": "API for DocDoc app, where I am learning new concepts",
     "maintainer": "Mohamed Amine ALOUINI alouinimedamin@gmail.com",
@@ -62,7 +62,7 @@
             "@php artisan key:generate --ansi"
         ],
         "test": [
-            "vendor/bin/phpunit --coverage-text --colors=never"
+            "vendor/bin/phpunit --coverage-text --colors=never --coverage-html coverage"
         ]
     }
 }
