@@ -10,16 +10,6 @@ use App\User;
 class AuthController extends Controller
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
-
-    /**
      * Register a new User
      *
      * @return \Illuminate\Http\JsonResponse

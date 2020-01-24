@@ -1,4 +1,4 @@
-<?php
+$router<?php
 
 use Illuminate\Http\Request;
 
@@ -12,30 +12,28 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::group([
-    'prefix' => 'auth'
-], function ($router) {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('register', 'AuthController@register');
     Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
 });
-Route::group([
-    'prefix' => 'patients'
-], function ($router) {
-    Route::get('/', 'PatientController@index');
-    Route::get('/{id}', 'PatientController@show');
-    Route::post('', 'PatientController@store');
-    Route::put('/{id}', 'PatientController@update');
-    Route::delete('/{id}', 'PatientController@delete');
-});
-Route::group([
-    'prefix' => 'appointments'
-], function ($router) {
-    Route::get('/', 'AppointmentController@index');
-    Route::get('/{id}', 'AppointmentController@show');
-    Route::post('', 'AppointmentController@store');
-    Route::put('/{id}', 'AppointmentController@update');
-    Route::delete('/{id}', 'AppointmentController@delete');
+Route::group(['middleware' => 'jwt.auth'], function () {
+    Route::group(['prefix' => 'auth'], function () {
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+    });
+    Route::group(['prefix' => 'patients'], function () {
+        Route::get('/', 'PatientController@index');
+        Route::get('/{id}', 'PatientController@show');
+        Route::post('', 'PatientController@store');
+        Route::put('/{id}', 'PatientController@update');
+        Route::delete('/{id}', 'PatientController@delete');
+    });
+    Route::group(['prefix' => 'appointments'], function () {
+        Route::get('/', 'AppointmentController@index');
+        Route::get('/{id}', 'AppointmentController@show');
+        Route::post('', 'AppointmentController@store');
+        Route::put('/{id}', 'AppointmentController@update');
+        Route::delete('/{id}', 'AppointmentController@delete');
+    });
 });

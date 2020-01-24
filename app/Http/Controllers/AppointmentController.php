@@ -13,15 +13,16 @@ class AppointmentController extends Controller
         try {
             $appointments = Appointment::with('patient')->get();
             return \Utils::returnData($appointments);
+            // @codeCoverageIgnoreStart
         } catch (\Exception $e) {
             return \Utils::handleException($e);
-        }
+        }   // @codeCoverageIgnoreEnd
     }
 
     public function show($id)
     {
         try {
-            $appointment = Appointment::findOrFail($id);
+            $appointment = Appointment::with('patient')->findOrFail($id);
             return \Utils::returnData($appointment);
         } catch (\Exception $e) {
             return \Utils::handleException($e);
@@ -58,19 +59,11 @@ class AppointmentController extends Controller
               'notes'           => 'sometimes|nullable|string',
               'visited'         => 'sometimes|boolean'
             ]);
-            if ($request->has('starts_on') && !Appointment::isFreeBetween($request->starts_on, $request->ends_on)) {
+            $appointment = Appointment::findOrFail($id);
+            if ($request->has('starts_on') && !Appointment::isFreeBetween($request->starts_on, $request->ends_on, $id)) {
                 throw new DatesException;
             }
-            $appointment = new Appointment;
-            $appointment->fill($request->only(['starts_on', 'notes', 'patient_id', 'ends_on']));
-            if ($request->has('starts_on')) {
-                if (!Appointment::isFreeBetween($request->starts_on, $request->ends_on)) {
-                    throw new DatesException;
-                } else {
-                    $appointment->starts_on = $request->starts_on;
-                    $appointment->ends_on = $request->ends_on;
-                }
-            }
+            $appointment->fill($request->only(['starts_on', 'notes', 'patient_id', 'ends_on', 'visited']));
             $appointment->save();
             return \Utils::returnSuccess('Appointment updated with success');
         } catch (\Exception $e) {
