@@ -21,12 +21,12 @@ return [
      * You can enable CORS for 1 or multiple paths.
      * Example: ['api/*']
      */
-    'paths' => ['api/*'],
+    'paths' => ['*'],
     'allowed_methods' => ['*'],
     'allowed_origins' => ['*'],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => false,
     'max_age' => false,
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 ];
