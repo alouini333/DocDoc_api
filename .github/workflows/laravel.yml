@@ -29,7 +29,3 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
-  phplint:
-    runs-on: ubuntu-last
-    steps:
-      - actions
