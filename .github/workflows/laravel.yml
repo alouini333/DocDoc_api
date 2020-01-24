@@ -16,6 +16,10 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
     - name: Generate key
       run: php artisan key:generate
+    - name: Set JWT Key
+      run: php artisan jwt:secret
+    - name: Clear cache
+      run: php artisan config:clear
     - name: Create Database
       run: |
         mkdir -p database
@@ -25,3 +29,7 @@ jobs:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
+  phplint:
+    runs-on: ubuntu-last
+    steps:
+      - actions
