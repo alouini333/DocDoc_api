@@ -1,4 +1,4 @@
-$router<?php
+<?php
 
 use Illuminate\Http\Request;
 
