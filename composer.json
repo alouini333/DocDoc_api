@@ -13,7 +13,7 @@
         "fideloper/proxy": "4.2.2",
         "laravel/framework": "6.12.0",
         "laravel/tinker": "2.1.0",
-        "spatie/laravel-permission": "3.6.0",
+        "spatie/laravel-permission": "4.2.0",
         "tymon/jwt-auth": "1.0.0-rc.5.1",
         "fruitcake/laravel-cors": "1.0.3"
     },
