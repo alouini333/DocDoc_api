@@ -31,7 +31,7 @@ services:
       - app-network
 
   db:
-    image: mariadb:10.4.11
+    image: mariadb:12.3.3
     container_name: db
     restart: unless-stopped
     tty: true
